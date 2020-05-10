@@ -95,7 +95,7 @@ pipeline {
   }
     environment {
         PROJECT_NAME = "ngraph"
-        BRANCH_NAME = "${env.BRANCH_NAME}"
+        BRANCH_NAME = "${env.BRANCH_NAME}.replace("/", "%2F")"
     }
 
     stages {
@@ -116,7 +116,7 @@ pipeline {
     }
     post {
         success{
-            build job: "mbextended/${BRANCH_NAME}.replace("/", "%2F")", quietPeriod: 10
+            build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
             //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
         }
         failure {
