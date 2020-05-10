@@ -95,6 +95,7 @@ pipeline {
   }
     environment {
         PROJECT_NAME = "ngraph"
+        BRANCH_NAME = '${env.BRANCH_NAME}'
     }
 
     stages {
@@ -108,11 +109,16 @@ pipeline {
         stage ("Parallel CI") {
             steps {
                 echo"--------Testing jobs---------------"
+                echo"--------${BRANCH_NAME}---------------"
                 //sleep(time:100,unit:"SECONDS")
             }
         }
     }
     post {
+        success{
+            build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
+            //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
+        }
         failure {
            echo"--------failing jobs-----------" 
         }

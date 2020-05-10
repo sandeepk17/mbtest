@@ -2,7 +2,7 @@ pipeline {
   agent{
       // Set Build Agent as Docker file 
       dockerfile true
-  }
+    }
     environment {
         PROJECT_NAME = "ngraph"
     }
