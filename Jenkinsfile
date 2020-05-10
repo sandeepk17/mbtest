@@ -116,7 +116,7 @@ pipeline {
     }
     post {
         success{
-            build job: "${BRANCH_NAME}", quietPeriod: 10
+            build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
             //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
         }
         failure {
