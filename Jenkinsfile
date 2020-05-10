@@ -95,7 +95,7 @@ pipeline {
   }
     environment {
         PROJECT_NAME = "ngraph"
-        BRANCH_NAME = "${env.BRANCH_NAME}.replace("/", "%2F")"
+        BRANCH_NAME = "${env.BRANCH_NAME}.replace('/', '%2F')"
     }
 
     stages {
