@@ -10,9 +10,10 @@ pipeline {
     stages {
         stage ("downstream") {
             steps {
-                script {
-                    killPreviousRunningJobs()
-                }
+                echo"--------Testing jobs---------------"
+                //script {
+                //    killPreviousRunningJobs()
+                //}
             }
         }
         stage ("Regression testing") {
