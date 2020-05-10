@@ -1,0 +1,34 @@
+pipeline {
+  agent{
+      // Set Build Agent as Docker file 
+      dockerfile true
+  }
+    environment {
+        PROJECT_NAME = "ngraph"
+    }
+
+    stages {
+        stage ("downstream") {
+            steps {
+                script {
+                    killPreviousRunningJobs()
+                }
+            }
+        }
+        stage ("Regression testing") {
+            steps {
+                echo"--------Testing jobs---------------"
+                //sleep(time:100,unit:"SECONDS")
+            }
+        }
+    }
+    post {
+        failure {
+           echo"--------failing jobs-----------" 
+        }
+        cleanup {
+            echo"--------deleting repo-----------" 
+            //deleteDir()
+        }
+    }
+}
