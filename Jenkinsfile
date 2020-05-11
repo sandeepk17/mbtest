@@ -1,8 +1,8 @@
 
 @NonCPS
+import jenkins.model.Jenkins
 
 def killPreviousRunningJobs() {
-    def manager = "my manager" 
     def jenkinsQueue = manager.hudson.instance.queue
 
     def downstream_jobs = manager.build.getParent().getDownstreamProjects()
