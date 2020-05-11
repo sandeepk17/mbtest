@@ -1,6 +1,6 @@
 
 @NonCPS
-
+import hudson.model.*
 def killPreviousRunningJobs() {
     def jobname = env.JOB_NAME
     def buildnum = env.BUILD_NUMBER.toInteger()
