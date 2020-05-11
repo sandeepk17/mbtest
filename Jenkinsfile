@@ -5,7 +5,6 @@ def killPreviousRunningJobs() {
     def buildnum = env.BUILD_NUMBER.toInteger()
 
     def queue = Jenkins.instance.queue()
-    echo "Cleared: ${queue.items.length} items"
     queue.clear();
 
 }
