@@ -1,5 +1,4 @@
 @library('mbtest@master') _
-}
 
 //import jenkins.model.Jenkins
 def killPreviousRunningJobs() {
