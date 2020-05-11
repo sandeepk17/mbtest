@@ -1,4 +1,5 @@
-package jobDSLUtils
+package Utils
+import jenkins.model.Jenkins
 
 public class JobContentConfigurations {
     static void configurePostGroovyCancelDownstreamQueues (def this_groovyPostbuildRecorder ){
