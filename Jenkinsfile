@@ -1,6 +1,6 @@
-#!/usr/bin/env groovy
-
-import jenkins.model.Jenkins
+libraries {
+  lib('mbtest')
+}
 
 //import jenkins.model.Jenkins
 def killPreviousRunningJobs() {
