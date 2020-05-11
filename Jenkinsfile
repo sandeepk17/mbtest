@@ -105,7 +105,7 @@ pipeline {
                 script {
                         def branchName = "${env.BRANCH_NAME}"
     
-                        def buildNo = "${env.BUILD_NUMBER}
+                        def buildNo = "${env.BUILD_NUMBER}"
     
                         println "checking if need to clean the queue for" + branchName + "  build      number : " + buildNo
 
