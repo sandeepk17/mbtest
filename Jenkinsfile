@@ -1,12 +1,16 @@
 
 @NonCPS
 def killPreviousRunningJobs() {
-    def jobname = env.JOB_NAME
-    def buildnum = env.BUILD_NUMBER.toInteger()
-
-    def queue = Jenkins.instance.queue()
-    queue.clear();
-
+    def branchName = env.BRANCH_NAME
+    def buildNo = env.BUILD_NUMBER.toInteger()
+    println "checking if need to clean the queue for" +   branchName + "  Buildnumber : " + buildNo
+    def q = Jenkins.instance.queue
+    q.items.each { 
+        println("${it.task.name}:")
+    }
+    q.items.findAll { it.task.name.startsWith(branchName) }.each {
+      q.cancel(it.task) 
+    }
 }
 
 def notifyByEmail(def gitPrInfo) {
@@ -101,7 +105,7 @@ pipeline {
             steps {
                 echo"--------Testing jobs---------------"
                 echo"--------${BRANCH_NAME}---------------"
-                //sleep(time:100,unit:"SECONDS")
+                sleep(time:200,unit:"SECONDS")
             }
         }
     }
