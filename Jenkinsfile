@@ -103,19 +103,10 @@ pipeline {
         stage ("Checkout") {
             steps {
                 script {
-                        def branchName = "${env.BRANCH_NAME}"
-    
-                        def buildNo = "${env.BUILD_NUMBER}"
-    
-                        println "checking if need to clean the queue for" + branchName + "  build      number : " + buildNo
-
-                        def q = Jenkins.instance.queue
-                        q.items.each { 
-                            println("${it.task.name}:")
-                        }    
-                        q.items.findAll { it.task.name.startsWith(branchName) }.each {
-                          q.cancel(it.task) 
-                        }
+                    def queue = Hudson.instance.queue
+                    println "Queue contains ${queue.items.length} items"
+                    queue.clear()
+                    println "Queue cleared"
                 }
             }
         }
