@@ -1,5 +1,4 @@
-libraries {
-  lib('mbtest')
+@library('mbtest@master') _
 }
 
 //import jenkins.model.Jenkins
