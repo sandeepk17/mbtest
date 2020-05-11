@@ -103,12 +103,12 @@ pipeline {
         stage ("Checkout") {
             steps {
                 script {
-                        def branchName = build.environment.get("GIT_BRANCH_NAME")
+                        def branchName = "${env.BRANCH_NAME}"
     
-                        def buildNo = build.environment.get("BUILD_NUMBER")
+                        def buildNo = "${env.BUILD_NUMBER}
     
                         println "checking if need to clean the queue for" + branchName + "  build      number : " + buildNo
-                        
+
                         def q = Jenkins.instance.queue
                         q.items.each { 
                             println("${it.task.name}:")
