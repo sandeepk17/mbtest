@@ -11,6 +11,7 @@ pipeline {
         stage ("downstream") {
             steps {
                 echo"--------Testing jobs---------------"
+                sleep(time:200,unit:"SECONDS")
                 //script {
                 //    killPreviousRunningJobs()
                 //}
@@ -19,7 +20,7 @@ pipeline {
         stage ("Regression testing") {
             steps {
                 echo"--------Testing jobs---------------"
-                //sleep(time:100,unit:"SECONDS")
+                sleep(time:100,unit:"SECONDS")
             }
         }
     }
