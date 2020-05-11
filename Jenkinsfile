@@ -1,12 +1,6 @@
 
 import jenkins.model.Jenkins
 
-manager.listener.logger.println ("")
-manager.listener.logger.println ("####################################################################")
-manager.listener.logger.println ("# Groovy script: Cancelling downstream queue before triggering them ")
-manager.listener.logger.println ("####################################################################")
-manager.listener.logger.println ("")
-
 //import jenkins.model.Jenkins
 
 def killPreviousRunningJobs() {
