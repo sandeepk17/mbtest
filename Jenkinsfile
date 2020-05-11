@@ -4,17 +4,20 @@ import jenkins.model.Jenkins
 
 //import jenkins.model.Jenkins
 def killPreviousRunningJobs() {
-    def branchName = env.BRANCH_NAME
-    def buildNo = env.BUILD_NUMBER.toInteger()
+    def branchName = build.environment.get("GIT_BRANCH_NAME")
+    
+    def buildNo = build.environment.get("BUILD_NUMBER")
+    
+    println "checking if need to clean the queue for" + branchName + "  build      number : " + buildNo
+    
     def q = Jenkins.instance.queue
-    //Find items in queue that match <project name>
-    def queue = q.items.findAll { it.task.name.startsWith(branchName) }
-    //get all jobs id to list
-    def queue_list = []
-    queue.each { queue_list.add(it.getId()) }
-    println ("There is no jobs in the queue of: " + queue_list )
-    //sort id's, remove last one - in order to keep the newest job, cancel the rest
-    queue_list.sort().take(queue_list.size() - 1).each { q.doCancelItem(it) }
+    q.items.each { 
+        println("${it.task.name}:")
+    }
+    
+    q.items.findAll { it.task.name.startsWith(branchName) }.each {
+      q.cancel(it.task) 
+    }
 }
 
 def notifyByEmail(def gitPrInfo) {
