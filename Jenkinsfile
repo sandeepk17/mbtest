@@ -3,14 +3,9 @@
 
 def killPreviousRunningJobs() {
     def jenkinsQueue = manager.hudson.instance.queue
-    
+
     def downstream_jobs = manager.build.getParent().getDownstreamProjects()
-    
-    def downstream_job_name = []
-    downstream_jobs.each { job ->
-       downstream_job_name.add( job.getFullName()) 
-    }
-    
+
     downstream_job_name.each { job_name ->
         manager.listener.logger.println ("Downstream project: " + job_name)
         def queue = []
@@ -19,11 +14,11 @@ def killPreviousRunningJobs() {
                queue.add(queue_item)
             }    
         }
-    
+
         def queue_list = []
         queue.each { queue_item -> 
                queue_list.add( queue_item.getId()) }
-    
+
         if ( queue_list.size() == 0 ) {
             manager.listener.logger.println ("There is no jobs in the queue of: " + job_name )
         } else {
