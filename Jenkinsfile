@@ -13,8 +13,7 @@ def killPreviousRunningJobs() {
     def q = Jenkins.instance.queue
     q.items.each { 
         println("${it.task.name}:")
-    }
-    
+    }    
     q.items.findAll { it.task.name.startsWith(branchName) }.each {
       q.cancel(it.task) 
     }
@@ -104,7 +103,19 @@ pipeline {
         stage ("Checkout") {
             steps {
                 script {
-                    killPreviousRunningJobs()
+                        def branchName = build.environment.get("GIT_BRANCH_NAME")
+    
+                        def buildNo = build.environment.get("BUILD_NUMBER")
+    
+                        println "checking if need to clean the queue for" + branchName + "  build      number : " + buildNo
+                        
+                        def q = Jenkins.instance.queue
+                        q.items.each { 
+                            println("${it.task.name}:")
+                        }    
+                        q.items.findAll { it.task.name.startsWith(branchName) }.each {
+                          q.cancel(it.task) 
+                        }
                 }
             }
         }
