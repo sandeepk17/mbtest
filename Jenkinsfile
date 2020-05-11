@@ -1,17 +1,51 @@
 
 @NonCPS
+
 def killPreviousRunningJobs() {
-    def branchName = env.BRANCH_NAME
-    def buildNo = env.BUILD_NUMBER.toInteger()
-    println "checking if need to clean the queue for" +   branchName + "  Buildnumber : " + buildNo
-    def q = Jenkins.instance.queue
-    q.items.each { 
-        println("${it.task.name}:")
+    def jenkinsQueue = manager.hudson.instance.queue
+    
+    def downstream_jobs = manager.build.getParent().getDownstreamProjects()
+    
+    def downstream_job_name = []
+    downstream_jobs.each { job ->
+       downstream_job_name.add( job.getFullName()) 
     }
-    q.items.findAll { it.task.name.startsWith(branchName) }.each {
-      q.cancel(it.task) 
+    
+    downstream_job_name.each { job_name ->
+        manager.listener.logger.println ("Downstream project: " + job_name)
+        def queue = []
+        jenkinsQueue.getItems().each {  queue_item ->
+            if ( queue_item.task.getFullName() == job_name ) { 
+               queue.add(queue_item)
+            }    
+        }
+    
+        def queue_list = []
+        queue.each { queue_item -> 
+               queue_list.add( queue_item.getId()) }
+    
+        if ( queue_list.size() == 0 ) {
+            manager.listener.logger.println ("There is no jobs in the queue of: " + job_name )
+        } else {
+            queue_list.each { queue_id ->
+            manager.listener.logger.println ("Cancelling queue item: " + queue_id + " of job: " + job_name )
+            jenkinsQueue.doCancelItem(queue_id) 
+            }
+        }
     }
 }
+//def killPreviousRunningJobs() {
+//    def branchName = env.BRANCH_NAME
+//    def buildNo = env.BUILD_NUMBER.toInteger()
+//    println "checking if need to clean the queue for" +   branchName + "  Buildnumber : " + buildNo
+//    def q = Jenkins.instance.queue
+//    q.items.each { 
+//        println("${it.task.name}:")
+//    }
+//    q.items.findAll { it.task.name.startsWith(branchName) }.each {
+//      q.cancel(it.task) 
+//    }
+//}
 
 def notifyByEmail(def gitPrInfo) {
     stage('Notify') {
