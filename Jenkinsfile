@@ -1,5 +1,4 @@
 
-import hudson.model.*
 import jenkins.model.Jenkins
 
 manager.listener.logger.println ("")
