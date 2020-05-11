@@ -138,12 +138,8 @@ pipeline {
         stage ("Checkout") {
             steps {
                 script {
-                    manager.listener.logger.println ("")
-                    manager.listener.logger.println ("####################################################################")
-                    manager.listener.logger.println ("# Groovy script: Cancelling downstream queue before triggering them ")
-                    manager.listener.logger.println ("####################################################################")
-                    manager.listener.logger.println ("")
                     //import jenkins.model.Jenkins
+                    def manager = "my manager" // probably not what you want
                     def jenkinsQueue = manager.hudson.instance.queue
                     def downstream_jobs = manager.build.getParent().getDownstreamProjects()
                     def downstream_job_name = []
