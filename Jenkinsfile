@@ -6,6 +6,7 @@ def killPreviousRunningJobs() {
     println "checking if need to clean the queue for" +   branchName + "  Buildnumber : " + buildNo
     def q = Jenkins.instance.queue
     q.items.findAll { it.task.name.startsWith(branchName) }.each {
+      println "cleaning queue"
       q.cancel(it.task) 
     }
 }
