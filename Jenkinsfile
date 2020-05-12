@@ -89,42 +89,77 @@ def checkoutSources() {
 }
 
 pipeline {
-  agent{
-      // Set Build Agent as Docker file 
-      dockerfile true
-  }
+    agent{
+        // Set Build Agent as Docker file 
+        dockerfile true
+    }
     environment {
         PROJECT_NAME = "ngraph"
         BRANCH_NAME = "${env.BRANCH_NAME}".replace("/", "%2F")
     }
-
     stages {
-        stage ("Checkout") {
+        stage('build') {
             steps {
+              echo 'This is build A'
+              sh 'uname -a'
+
                 script {
-                    killPreviousRunningJobs()
+                  
+                    env.GIT_COMMIT = checkout scm
+                    currentBuild.getBuildCauses()?.each { c -> echo "[INFO] ${currentBuild.getFullDisplayName()} (current): Cause: ${c}" }
+                    currentBuild.getBuildVariables()?.each { k, v -> echo "[INFO] ${currentBuild.getFullDisplayName()} (current): ${k}: ${v}" }
+                    echo ''
+
+                    def manualTrigger = true
+                    currentBuild.upstreamBuilds?.each { b ->
+                        echo "[INFO] Upstream build: ${b.getFullDisplayName()}"
+                        b.getBuildCauses()?.each { c ->
+                              if (c.endsWith('$SCMTriggerCause')) {
+                                echo "[INFO] ${b.getFullDisplayName()}: Cause: ${c}"
+                                def build_vars = b.getBuildVariables()
+                                if (build_vars) { echo "[INFO] ${build_vars['GIT_COMMIT']}" }
+                                echo ''
+                              }
+                        }
+                        manualTrigger = false
+                    }
+                    if (manualTrigger)
+                    {
+                        echo "[INFO] This build was triggered manually"
+                    }
                 }
-            }
-        }
-        stage ("Parallel CI") {
-            steps {
-                echo"--------Testing jobs---------------"
-                echo"--------${BRANCH_NAME}---------------"
-                //sleep(time:100,unit:"SECONDS")
+
+              build job: "mbextended/${BRANCH_NAME}", wait: false, quietPeriod: 5
             }
         }
     }
-    post {
-        success{
-            build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
-            //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
-        }
-        failure {
-           echo"--------failing jobs-----------" 
-        }
-        cleanup {
-            echo"--------deleting repo-----------" 
-            //deleteDir()
-        }
-    }
+    //stages {
+    //    stage ("Checkout") {
+    //        steps {
+    //            script {
+    //                killPreviousRunningJobs()
+    //            }
+    //        }
+    //    }
+    //    stage ("Parallel CI") {
+    //        steps {
+    //            echo"--------Testing jobs---------------"
+    //            echo"--------${BRANCH_NAME}---------------"
+    //            //sleep(time:100,unit:"SECONDS")
+    //        }
+    //    }
+    //}
+    //post {
+    //    success{
+    //        build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
+    //        //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
+    //    }
+    //    failure {
+    //       echo"--------failing jobs-----------" 
+    //    }
+    //    cleanup {
+    //        echo"--------deleting repo-----------" 
+    //        //deleteDir()
+    //    }
+    //}
 }
