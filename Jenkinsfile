@@ -104,8 +104,9 @@ pipeline {
               sh 'uname -a'
 
                 script {
-                  
+                    echo 'This is before checkout scm'
                     env.GIT_COMMIT = checkout scm
+                    echo 'This is after checkout scm'
                     currentBuild.getBuildCauses()?.each { c -> echo "[INFO] ${currentBuild.getFullDisplayName()} (current): Cause: ${c}" }
                     currentBuild.getBuildVariables()?.each { k, v -> echo "[INFO] ${currentBuild.getFullDisplayName()} (current): ${k}: ${v}" }
                     echo ''
