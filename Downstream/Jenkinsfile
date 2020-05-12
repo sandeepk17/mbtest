@@ -16,7 +16,9 @@ pipeline {
                 //}
                 script{
                     currentBuild.displayName = 'This build needs help!!!'
-                currentBuild.description = "Committer: ${PROJECT_NAME}"
+                    currentBuild.description = "Committer: ${PROJECT_NAME}"
+                    echo"..........${currentBuild.buildVariables}...."
+                    echo"..........${currentBuild.upstreamBuilds}...."
                 }
             }
         }
