@@ -14,8 +14,10 @@ pipeline {
                 //script {
                 //    killPreviousRunningJobs()
                 //}
-                currentBuild.displayName = 'This build needs help!!!'
-                buildDescription("Committer: ${PROJECT_NAME}")
+                script{
+                    currentBuild.displayName = 'This build needs help!!!'
+                currentBuild.description = "Committer: ${PROJECT_NAME}"
+                }
             }
         }
         stage ("Regression testing") {
