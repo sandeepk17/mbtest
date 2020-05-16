@@ -159,11 +159,20 @@ pipeline {
                         echo "[INFO] This build was triggered manually"
                     }
                 }
-                notifyBuild(currentBuild.result)
-                build job: "mbextended/${BRANCH_NAME}", wait: false, quietPeriod: 5
+                build_res = build job: "mbextended/${BRANCH_NAME}", wait: false, quietPeriod: 5
+                    if (build_res.result != "SUCCESS")
+                    {
+                        color = "red"
+                    }
+                    else
+                    {
+                        color = "green"
+                    }
+                    currentBuild.description = '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">build#'+ build_res.number + '</a><br>' + "\n"
+                    buildno = "" + build_res.number
+                }
             }
         }
-    }
     //stages {
     //    stage ("Checkout") {
     //        steps {
