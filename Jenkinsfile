@@ -166,7 +166,6 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                addBadge(icon: 'Test Icon', text: 'build')
                 echo 'This is build A'
                 sh 'uname -a'
 
