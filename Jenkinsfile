@@ -158,8 +158,7 @@ pipeline {
                     {
                         echo "[INFO] This build was triggered manually"
                     }
-                }
-                build_res = build job: "mbextended/${BRANCH_NAME}", wait: false, quietPeriod: 5
+                    build_res = build job: "mbextended/${BRANCH_NAME}", wait: false, quietPeriod: 5
                     if (build_res.result != "SUCCESS")
                     {
                         color = "red"
