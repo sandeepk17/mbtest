@@ -1,4 +1,6 @@
 
+import hudson.model.*
+
 @NonCPS
 
 def killPreviousRunningJobs() {
@@ -67,6 +69,34 @@ def notifyByEmail(def gitPrInfo) {
             to: "${notifyPeople}"
         )
     }
+}
+void notifyBuild(String buildStatus, String version) {
+    // build status of null means successful
+    buildStatus = buildStatus ?: 'SUCCESSFUL'
+    String subject = "${buildStatus}: Job ${env.JOB_NAME} [${env.BUILD_DISPLAY_NAME}] | ${version}" as String
+    String summary = "${subject} (${env.BUILD_URL})" as String
+    // Override default values based on build status
+    if (buildStatus == 'STARTED') {
+        color = 'YELLOW'
+        colorCode = '#FFFF00'
+    } else if (buildStatus == 'SUCCESSFUL') {
+        color = 'GREEN'
+        colorCode = '#00FF00'
+    } else if (buildStatus == 'PUBLISHED') {
+        color = 'BLUE'
+        colorCode = '#0000FF'
+    } else {
+        color = 'RED'
+        colorCode = '#FF0000'
+    }
+
+    // Send notifications
+    this.notifySlack(colorCode, summary, buildStatus)
+}
+
+void notifySlack(String color, String message, String buildStatus) {
+    String payload = "{\"username\": \"${env.JOB_NAME}\",\"attachments\":[{\"title\": \"${env.JOB_NAME} ${buildStatus}\",\"color\": \"${color}\",\"text\": \"${message}\"}]}" as String
+    currentBuild.description = "${payload}"
 }
 
 def getGitPrInfo(String project) {
@@ -171,17 +201,17 @@ pipeline {
                 script {
                     echo "------------- Run integration test -------------"
 
-                    echo "------------- Update build description -------------"
-                    if (currentBuild.currentResult == 'SUCCESS') {
-                      currentBuild.description = "<b><font color='gold'>${currentBuild.currentResult}</font><br>" +
-                        " - " +
-                        "<a href='${env.BUILD_URL}/job/${currentBuild.currentResult}'>IntegrationTest</b></a>"
-                    }
-                    if (currentBuild.currentResult == 'FAILURE') {
-                      currentBuild.description = "<b><font color='red'>${currentBuild.currentResult}</font><br>" +
-                        " - " +
-                        "<a href='${env.BUILD_URL}/job/${currentBuild.currentResult}'>IntegrationTest</b></a>"
-                    }
+                    //echo "------------- Update build description -------------"
+                    //if (currentBuild.currentResult == 'SUCCESS') {
+                    //  currentBuild.description = "<b><font color='gold'>${currentBuild.currentResult}</font><br>" +
+                    //    " - " +
+                    //    "<a href='${env.BUILD_URL}/job/${currentBuild.currentResult}'>IntegrationTest</b></a>"
+                    //}
+                    //if (currentBuild.currentResult == 'FAILURE') {
+                    //  currentBuild.description = "<b><font color='red'>${currentBuild.currentResult}</font><br>" +
+                    //    " - " +
+                    //    "<a href='${env.BUILD_URL}/job/${currentBuild.currentResult}'>IntegrationTest</b></a>"
+                    //}
                 }
             }
         }       
@@ -203,19 +233,17 @@ pipeline {
     //    }
     //}
     post {
-        success{
-            echo"--------success-----------" 
-            //notifyBuild(currentBuild.result)
-            //build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
-            //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
-            // currentbuild.result
+        success {
+            this.notifyBuild('SUCCESSFUL', version)
         }
         failure {
-           echo"--------failing jobs-----------" 
+            this.notifyBuild('FAILURE', version)
         }
-        cleanup {
-            echo"--------deleting repo-----------" 
-            //deleteDir()
+        aborted {
+            this.notifyBuild('ABORTED', version)
+        }
+        unstable {
+            this.notifyBuild('UNSTABLE', version)
         }
     }
 }
