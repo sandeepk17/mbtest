@@ -154,8 +154,8 @@ pipeline {
                         echo "[INFO] This build was triggered manually"
                     }
                 }
-
-              build job: "mbextended/${BRANCH_NAME}", wait: false, quietPeriod: 5
+                notifyBuild(currentBuild.result)
+                build job: "mbextended/${BRANCH_NAME}", wait: false, quietPeriod: 5
             }
         }
     }
