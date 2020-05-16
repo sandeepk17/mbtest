@@ -220,6 +220,7 @@ pipeline {
 
                         error 'Build failed'
                     }
+                    addEmbeddableBadgeConfiguration(id: 'win32build')
                 }
                     //echo "------------- Update build description -------------"
                     //if (currentBuild.currentResult == 'SUCCESS') {
