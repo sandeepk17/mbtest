@@ -218,6 +218,7 @@ pipeline {
                         win32BuildBadge.setColor('pink')
 
                         error 'Build failed'
+                    }
 
                     //echo "------------- Update build description -------------"
                     //if (currentBuild.currentResult == 'SUCCESS') {
