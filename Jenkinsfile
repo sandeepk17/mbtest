@@ -34,15 +34,15 @@ def notifyBuild(String buildStatus = 'STARTED') {
     if ((buildStatus == 'STARTED')||(buildStatus == 'DEPLOY TO STAGING?')) {
         color = 'YELLOW'
         colorCode = '#FFFF00'
-        echo "ERROR:${summary}"
+        echo "ERROR:${details}"
     } else if (buildStatus == 'SUCCESSFUL') {
         color = 'GREEN'
         colorCode = '#00FF00'
-        echo "ERROR:${summary}"
+        echo "ERROR:${details}"
     } else {
         color = 'RED'
         colorCode = '#FF0000'
-        echo "ERROR:${summary}"
+        echo "ERROR:${details}"
     }
 }
 
