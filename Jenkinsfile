@@ -127,6 +127,7 @@ pipeline {
         PROJECT_NAME = "ngraph"
         BRANCH_NAME = "${env.BRANCH_NAME}".replace("/", "%2F")
         buildno = null
+        build_res = ""
     }
     stages {
         stage('build') {
