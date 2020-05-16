@@ -158,6 +158,7 @@ pipeline {
         BRANCH_NAME = "${env.BRANCH_NAME}".replace("/", "%2F")
         buildno = null
         build_res = ""
+        version = "4.5.6"
     }
     options {
         ansiColor('xterm')
