@@ -221,7 +221,7 @@ pipeline {
 
                         error 'Build failed'
                     }
-                    addEmbeddableBadgeConfiguration(id: 'win32build')
+                    addEmbeddableBadgeConfiguration(id: 'win32build',subject:'test',link:'http://localhost:8080/job/mbpipeline/job/feature%252Fbranch-2/badge/text')
                 }
                     //echo "------------- Update build description -------------"
                     //if (currentBuild.currentResult == 'SUCCESS') {
