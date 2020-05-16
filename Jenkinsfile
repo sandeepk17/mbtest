@@ -234,7 +234,6 @@ pipeline {
                     //    " - " +
                     //    "<a href='${env.BUILD_URL}/job/${currentBuild.currentResult}'>IntegrationTest</b></a>"
                     //}
-                }
             }
         }       
     }
