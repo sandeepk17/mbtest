@@ -166,6 +166,7 @@ pipeline {
     stages {
         stage('build') {
             steps {
+                addHtmlBadge(html: 'http://www.google.com')
                 echo 'This is build A'
                 sh 'uname -a'
 
