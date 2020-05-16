@@ -166,6 +166,23 @@ pipeline {
                 }
             }
         }
+        stage{
+            script {
+                echo "------------- Run integration test -------------"
+
+                echo "------------- Update build description -------------"
+                if (currentBuild.currentResult == 'SUCCESS') {
+                  currentBuild.description = "<b><font color='gold'>${currentBuild.currentResult}</font><br>" +
+                    " - " +
+                    "<a href='${env.BUILD_URL}/job/${currentBuild.currentResult}'>IntegrationTest</b></a>"
+                }
+                if (currentBuild.currentResult == 'FAILURE') {
+                  currentBuild.description = "<b><font color='red'>${currentBuild.currentResult}</font><br>" +
+                    " - " +
+                    "<a href='${env.BUILD_URL}/job/${currentBuild.currentResult}'>IntegrationTest</b></a>"
+                }
+            }
+        }       
     }
     //stages {
     //    stage ("Checkout") {
@@ -186,7 +203,7 @@ pipeline {
     post {
         success{
             echo"--------success-----------" 
-            notifyBuild(currentBuild.result)
+            //notifyBuild(currentBuild.result)
             //build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
             //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
             // currentbuild.result
