@@ -166,8 +166,9 @@ pipeline {
     stages {
         stage('build') {
             steps {
-              echo 'This is build A'
-              sh 'uname -a'
+                addBadge(icon: 'Test Icon', text: 'build')
+                echo 'This is build A'
+                sh 'uname -a'
 
                 script {
                     echo 'This is before checkout scm'
@@ -199,7 +200,6 @@ pipeline {
         }
         stage('test'){
             steps{
-                addBadge(icon: 'Test Icon', text: 'Cluster0 Transit')
                 script {
                     echo "------------- Run integration test -------------"
                     def win32BuildBadge = addEmbeddableBadgeConfiguration(id: "win32build", subject: "Windows Build")
@@ -221,8 +221,8 @@ pipeline {
 
                         error 'Build failed'
                     }
-                    addBadge(icon: 'http://localhost:8080/job/mbpipeline/job/feature%252Fbranch-2/badge/icon', text: "PRODUCTION" ]
                 }
+                addBadge(icon: 'http://localhost:8080/job/mbpipeline/job/feature%252Fbranch-2/badge/icon', text: "PRODUCTION")
                     //echo "------------- Update build description -------------"
                     //if (currentBuild.currentResult == 'SUCCESS') {
                     //  currentBuild.description = "<b><font color='gold'>${currentBuild.currentResult}</font><br>" +
