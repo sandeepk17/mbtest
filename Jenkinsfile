@@ -34,12 +34,15 @@ def notifyBuild(String buildStatus = 'STARTED') {
     if ((buildStatus == 'STARTED')||(buildStatus == 'DEPLOY TO STAGING?')) {
         color = 'YELLOW'
         colorCode = '#FFFF00'
+        echo "ERROR:${summary}"
     } else if (buildStatus == 'SUCCESSFUL') {
         color = 'GREEN'
         colorCode = '#00FF00'
+        echo "ERROR:${summary}"
     } else {
         color = 'RED'
         colorCode = '#FF0000'
+        echo "ERROR:${summary}"
     }
 }
 
@@ -180,6 +183,7 @@ pipeline {
             notifyBuild(currentBuild.result)
             build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
             //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
+            // currentbuild.result
         }
         failure {
            echo"--------failing jobs-----------" 
