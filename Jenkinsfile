@@ -18,6 +18,31 @@ def killPreviousRunningJobs() {
     }
 }
 
+def notifyBuild(String buildStatus = 'STARTED') {
+    // build status of null means successful
+    buildStatus =  buildStatus ?: 'SUCCESSFUL'
+
+    // Default values
+    def colorName = 'RED'
+    def colorCode = '#FF0000'
+    def subject = "${buildStatus}: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]'"
+    def summary = "${subject} (${env.BUILD_URL})"
+    def details = """<p>STARTED: Job '${env.JOB_NAME} [${env.BUILSD_NUMBER}]':</p>
+    <p>Check console output at &QUOT;<a href='${env.BUILD_URL}'>${env.JOB_NAME} [${env.BUILD_NUMBER}]</a>&QUOT;</p>"""
+
+    // Override default values based on build status
+    if ((buildStatus == 'STARTED')||(buildStatus == 'DEPLOY TO STAGING?')) {
+        color = 'YELLOW'
+        colorCode = '#FFFF00'
+    } else if (buildStatus == 'SUCCESSFUL') {
+        color = 'GREEN'
+        colorCode = '#00FF00'
+    } else {
+        color = 'RED'
+        colorCode = '#FF0000'
+    }
+}
+
 def notifyByEmail(def gitPrInfo) {
     stage('Notify') {
         String notifyPeople = "${gitPrInfo.prAuthorEmail}, ${gitPrInfo.commitAuthorEmail}"
@@ -150,17 +175,18 @@ pipeline {
     //        }
     //    }
     //}
-    //post {
-    //    success{
-    //        build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
-    //        //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
-    //    }
-    //    failure {
-    //       echo"--------failing jobs-----------" 
-    //    }
-    //    cleanup {
-    //        echo"--------deleting repo-----------" 
-    //        //deleteDir()
-    //    }
-    //}
+    post {
+        success{
+            notifyBuild(currentBuild.result)
+            build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
+            //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
+        }
+        failure {
+           echo"--------failing jobs-----------" 
+        }
+        cleanup {
+            echo"--------deleting repo-----------" 
+            //deleteDir()
+        }
+    }
 }
