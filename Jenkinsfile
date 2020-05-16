@@ -126,6 +126,7 @@ pipeline {
     environment {
         PROJECT_NAME = "ngraph"
         BRANCH_NAME = "${env.BRANCH_NAME}".replace("/", "%2F")
+        buildno = null
     }
     stages {
         stage('build') {
@@ -191,8 +192,9 @@ pipeline {
     //}
     post {
         success{
-            notifyBuild(currentBuild.result)
-            build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
+            echo"--------success-----------" 
+            //notifyBuild(currentBuild.result)
+            //build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
             //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
             // currentbuild.result
         }
