@@ -27,7 +27,8 @@ pipeline {
     }
     stage('CI') {
       steps {
-        createSummary(text: "hello.....:${BRANCH_NAME}", icon: 'green.gif')
+          echo "--------${BRANCH_NAME}"
+        createSummary(text: "hello"BRANCH_NAME, icon: 'green.gif')
       }
     }
     stage('Report') {
