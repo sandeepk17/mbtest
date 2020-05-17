@@ -20,6 +20,7 @@ pipeline {
     }
     stage('Report') {
       steps {
+        addInfoBadge(text: 'Buildsummary', id: 'text', link: 'http://localhost:8080/job/badgetest/')
         echo 'Stage1 - Resize Primary'
       }
     }
