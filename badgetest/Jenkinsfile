@@ -18,6 +18,11 @@ pipeline {
             echo 'Stage1 - Resize Primary'
         }
     }
+    stage('CI') {
+      steps {
+        createSummary(text: 'hello', icon: 'hellow')
+      }
+    }
     stage('Report') {
       steps {
         addInfoBadge(text: 'Buildsummary', id: 'text', link: 'http://localhost:8080/job/badgetest/')
