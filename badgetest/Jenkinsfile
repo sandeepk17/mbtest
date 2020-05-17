@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        addBadge(icon: 'Build', text: 'Build Stage')
+        addBadge(icon: 'green.gif', text: 'Build Stage')
       }
     }
     stage('Stage1') {
