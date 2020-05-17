@@ -1,0 +1,27 @@
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      steps {
+        addBadge(icon: 'Build', text: 'Build Stage')
+      }
+    }
+    stage('Stage1') {
+        steps {
+            echo 'Stage1 - Resize Primary'
+        }
+    }
+    stage('Stage2') {
+        steps {
+            addBadge(icon: 'Replace Gw', text: 'Replace primary transit gateway')
+
+            echo 'Stage1 - Resize Primary'
+        }
+    }
+    stage('Report') {
+      steps {
+        echo 'Stage1 - Resize Primary'
+      }
+    }
+  }
+}
