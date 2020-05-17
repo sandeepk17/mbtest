@@ -1,5 +1,12 @@
 pipeline {
-  agent any
+    agent any
+    environment {
+        PROJECT_NAME = "ngraph"
+        BRANCH_NAME = "${env.BRANCH_NAME}".replace("/", "%2F")
+        buildno = null
+        build_res = ""
+        version = "4.5.6"
+    }
   stages {
     stage('Build') {
       steps {
@@ -20,7 +27,7 @@ pipeline {
     }
     stage('CI') {
       steps {
-        createSummary(text: "hello.....:${env.BUILD_URL}", icon: 'green.gif')
+        createSummary(text: "hello.....:${BRANCH_NAME}", icon: 'green.gif')
       }
     }
     stage('Report') {
