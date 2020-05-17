@@ -20,7 +20,7 @@ pipeline {
     }
     stage('CI') {
       steps {
-        createSummary(text: "hello.....${env.BRANCH_NAME}", icon: 'green.gif')
+        createSummary(text: "hello.....:${env.BUILD_URL}", icon: 'green.gif')
       }
     }
     stage('Report') {
