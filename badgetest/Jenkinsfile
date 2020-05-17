@@ -13,7 +13,7 @@ pipeline {
     }
     stage('Stage2') {
         steps {
-            addBadge(icon: 'Replace Gw', text: 'Replace primary transit gateway')
+            addBadge(icon: 'error.gif', text: 'Replace primary transit gateway')
 
             echo 'Stage1 - Resize Primary'
         }
