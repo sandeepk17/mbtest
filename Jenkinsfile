@@ -25,7 +25,14 @@ pipeline {
             steps {
                 echo"--------Testing jobs---------------"
                 echo"--------${BRANCH_NAME}---------------"
-                sleep(time:200,unit:"SECONDS")
+                sleep(time:100,unit:"SECONDS")
+            }
+        }
+        stage ("Parallel CI") {
+            steps {
+                script{
+                    build job: "downstream2/${BRANCH_NAME}", quietPeriod: 10
+                }
             }
         }
     }
