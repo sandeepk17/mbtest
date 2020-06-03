@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    environment {
+        PROJECT_NAME = "ngraph"
+        BRANCH_NAME = "${env.BRANCH_NAME}".replace("/", "%2F")
+        buildno = null
+        build_res = ""
+        version = "4.5.6"
+    }
+  stages {
+    stage('Build') {
+      steps {
+        addBadge(icon: 'green.gif', text: 'Build Stage')
+      }
+    }
+    stage('StageA') {
+        steps {
+            echo 'Stage1 - Resize Primary'
+        }
+    }
+    stage('StageB') {
+        steps {
+            echo 'Stage1 - Resize Primary'
+        }
+    }
+    stage('StageC') {
+      steps {
+          echo "--------${BRANCH_NAME}"
+      }
+    }
+    stage('stageD') {
+      steps {
+        echo 'Stage1 - Resize Primary'
+      }
+    }
+  }
+}
