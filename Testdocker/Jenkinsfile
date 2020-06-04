@@ -18,7 +18,7 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["ESB Layer-VAL","ESB Layer-VAL(Arriva_Web):selected"]'
+                        'return["VAL1","VAL2:selected"]'
                 ]
             ]
         ], 
