@@ -47,6 +47,29 @@ properties([
             ]
         ], 
         [$class: 'ChoiceParameter', 
+            choiceType: 'PT_MULTI_SELECT', 
+            description: 'Select the Env Name from the Dropdown List', 
+            filterLength: 1, 
+            filterable: true, 
+            name: 'Multi', 
+            randomName: 'choice-parameter-56313113978', 
+            script: [
+                $class: 'GroovyScript', 
+                fallbackScript: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return[\'Could not get Env\']'
+                ], 
+                script: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return["Dev","QA","Stage","Prod"]'
+                ]
+            ]
+        ], 
+        [$class: 'ChoiceParameter', 
             choiceType: 'PT_SINGLE_SELECT', 
             description: 'Select the TestSuit from the Dropdown List', 
             filterLength: 1, 
@@ -136,6 +159,7 @@ pipeline {
                 echo "${params.Env}"
                 echo "${params.Test}"
                 echo "${params.Server}"
+                echo "${params.Multi'}"
                 if (params.Server.equals("Could not get Environment from Env Param")) {
                   echo "Must be the first build after Pipeline deployment.  Aborting the build"
                   currentBuild.result = 'ABORTED'
