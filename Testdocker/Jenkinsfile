@@ -65,7 +65,12 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["ALL:selected","T1","T-2","T-3","T-4","T-5"]'
+                        'return["ALL:selected", \
+                                "T1", \
+                                "T-2", \
+                                "T-3", \
+                                "T-4", \
+                                "T-5"]'
                 ]
             ]
         ],
