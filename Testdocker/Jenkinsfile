@@ -1,0 +1,85 @@
+properties([
+    parameters([
+        [$class: 'ChoiceParameter', 
+            choiceType: 'PT_SINGLE_SELECT', 
+            description: 'Select the Env Name from the Dropdown List', 
+            filterLength: 1, 
+            filterable: true, 
+            name: 'Env',
+            script: [
+                $class: 'GroovyScript', 
+                fallbackScript: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return[\'Could not get Env\']'
+                ], 
+                script: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return["ESB Layer-VAL","ESB Layer-VAL(Arriva_Web):selected"]'
+                ]
+            ]
+        ], 
+        [$class: 'ChoiceParameter', 
+            choiceType: 'PT_SINGLE_SELECT', 
+            description: 'Select the TestSuit from the Dropdown List', 
+            filterLength: 1, 
+            filterable: true, 
+            name: 'Test', 
+            script: [
+                $class: 'GroovyScript', 
+                fallbackScript: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return[\'Could not get Env\']'
+                ], 
+                script: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return["ALL:selected", \
+                                "T1", \
+                                "T2", \
+                                "T3", \
+                                "T4", \
+                                "T5", \
+                                "T6", \
+                                "T7", \
+                                "T8, \
+                                "T9"]'
+                ]
+            ]
+        ]
+    ])
+])
+pipeline {
+    environment {
+         vari = ""
+    }
+    agent{
+        docker {
+            image 'smartbear/ready-api-soapui-testrunner:latest'
+            args '-v $HOME:/root -v="ReportFolder":/reports -v="ExtensionsFolder":/ext --entrypoint=\'\''
+        }
+    }
+  stages {
+      stage ("Test") {
+        steps {
+         script{
+          echo 'Hello'
+          echo "${params.Env}"
+          echo "${params.Test}"
+            if (params.Server.equals("Could not get Environment from Env Param")) {
+              echo "Must be the first build after Pipeline deployment.  Aborting the build"
+              currentBuild.result = 'ABORTED'
+              return
+            }
+          echo "Crossed param validation"
+          } 
+        }
+      }
+  }
+}
