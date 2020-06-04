@@ -19,7 +19,7 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["VAL1","VAL2:selected"]'
+                        'return["DEV","QA","Stage","Prod","VAL2:selected"]'
                 ]
             ]
         ], 
@@ -43,6 +43,42 @@ properties([
                     sandbox: false, 
                     script: 
                         'return["ALL:selected","T1","T-2","T-3","T-4","T-5"]'
+                ]
+            ]
+        ],
+        [$class: 'CascadeChoiceParameter', 
+            choiceType: 'PT_CHECKBOX', 
+            description: 'Select Servers', 
+            filterLength: 1, 
+            filterable: true, 
+            name: 'Server', 
+            randomName: 'choice-parameter-5631314456178619', 
+            referencedParameters: 'Env', 
+            script: [
+                $class: 'GroovyScript', 
+                fallbackScript: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return[\'Could not get Environment from Env Param\']'
+                ], 
+                script: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        ''' if (Env.equals("Dev")){
+                                return["devaaa001","devaaa002","devbbb001","devbbb002","devccc001","devccc002"]
+                            }
+                            else if(Env.equals("QA")){
+                                return["qaaaa001","qabbb002","qaccc003"]
+                            }
+                            else if(Env.equals("Stage")){
+                                return["staaa001","stbbb002","stccc003"]
+                            }
+                            else if(Env.equals("Prod")){
+                                return["praaa001","prbbb002","prccc003"]
+                            }
+                        '''
                 ]
             ]
         ]
