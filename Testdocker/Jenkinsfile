@@ -120,6 +120,7 @@ pipeline {
     agent {
         docker {
             image 'docker:latest'
+            args '-v $HOME/:/root/'
         }
     }
     stages {
