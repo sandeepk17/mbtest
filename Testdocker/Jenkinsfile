@@ -159,7 +159,7 @@ pipeline {
                 echo "${params.Env}"
                 echo "${params.Test}"
                 echo "${params.Server}"
-                echo "${params.Multi'}"
+                echo "${params.Multi}"
                 if (params.Server.equals("Could not get Environment from Env Param")) {
                   echo "Must be the first build after Pipeline deployment.  Aborting the build"
                   currentBuild.result = 'ABORTED'
