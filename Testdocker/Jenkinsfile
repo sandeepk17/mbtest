@@ -119,7 +119,7 @@ pipeline {
 
     agent {
         docker {
-            image 'dockerLlatest'
+            image 'docker:latest'
         }
     }
     stages {
