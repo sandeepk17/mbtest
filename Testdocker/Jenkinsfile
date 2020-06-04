@@ -146,33 +146,35 @@ pipeline {
             args '-v $HOME/:/root/'
         }
     }
-    stage('Build'){
-        agent{
-            docker {
-                image 'smartbear/ready-api-soapui-testrunner:latest'
-                args '-v $HOME:/root -v="ReportFolder":/reports -v="ExtensionsFolder":/ext --entrypoint=\'\''
+    stages{
+        stage('Build'){
+            agent{
+                docker {
+                    image 'smartbear/ready-api-soapui-testrunner:latest'
+                    args '-v $HOME:/root -v="ReportFolder":/reports -v="ExtensionsFolder":/ext --entrypoint=\'\''
+                }
+            }
+            steps {
+                script{
+                    echo 'Hello'
+                    echo "${params.Env}"
+                    echo "${params.Test}"
+                    echo "${params.Server}"
+                    echo "${params.Multi}"
+                    if (params.Server.equals("Could not get Environment from Env Param")) {
+                      echo "Must be the first build after Pipeline deployment.  Aborting the build"
+                      currentBuild.result = 'ABORTED'
+                      return
+                    }
+                    echo "Crossed param validation"
+                } 
             }
         }
-        steps {
-            script{
-                echo 'Hello'
-                echo "${params.Env}"
-                echo "${params.Test}"
-                echo "${params.Server}"
-                echo "${params.Multi}"
-                if (params.Server.equals("Could not get Environment from Env Param")) {
-                  echo "Must be the first build after Pipeline deployment.  Aborting the build"
-                  currentBuild.result = 'ABORTED'
-                  return
+        stage ("Test") {
+            steps {
+                script{
+                    echo 'Hello'
                 }
-                echo "Crossed param validation"
-            } 
-        }
-    }
-    stage ("Test") {
-        steps {
-            script{
-                echo 'Hello'
             }
         }
     }
