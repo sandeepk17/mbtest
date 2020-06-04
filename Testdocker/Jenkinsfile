@@ -6,6 +6,7 @@ properties([
             filterLength: 1, 
             filterable: true, 
             name: 'Env',
+            randomName: 'choice-parameter-5631314439613788',
             script: [
                 $class: 'GroovyScript', 
                 fallbackScript: [
@@ -27,7 +28,8 @@ properties([
             description: 'Select the TestSuit from the Dropdown List', 
             filterLength: 1, 
             filterable: true, 
-            name: 'Test', 
+            name: 'Test',
+            randomName: 'choice-parameter-5631314439613988', 
             script: [
                 $class: 'GroovyScript', 
                 fallbackScript: [
