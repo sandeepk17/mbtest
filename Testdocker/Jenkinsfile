@@ -140,12 +140,8 @@ pipeline {
          vari = ""
     }
 
-    agent {
-        docker {
-            image 'smartbear/ready-api-soapui-testrunner:latest'
-            args '-v $HOME:/root -v="ReportFolder":/reports -v="ExtensionsFolder":/ext --entrypoint=\'\''
-        }
-    }
+    agent any
+    
     stages{
         stage('Build'){
             steps {
