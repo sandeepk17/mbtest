@@ -66,7 +66,7 @@ properties([
             ]
         ], 
         [$class: 'ChoiceParameter', 
-            choiceType: 'PT_RADIO_BUTTON', 
+            choiceType: 'PT_RADIO_BUTTONS', 
             description: 'Select the TestSuit from the Dropdown List',
             name: 'Test',
             randomName: 'choice-parameter-5631314439613988', 
@@ -83,10 +83,10 @@ properties([
                     sandbox: false, 
                     script: 
                         'return["ALL:selected",\
-                                "sktst01", \
-                                "sktst02", \
-                                "sktst03", \
-                                "sktst04", \
+                                "sktst01",\
+                               "sktst02",\
+                                "sktst03",\
+                                "sktst04",\
                                 "sktst05"]'
                 ]
             ]
@@ -109,7 +109,7 @@ properties([
                     sandbox: false, 
                     script: 
                         'return["ALL:selected",\
-                                "c1-DK", \
+                                "c1-DK",\
                                 "c2-UK"]'
                 ]
             ]
