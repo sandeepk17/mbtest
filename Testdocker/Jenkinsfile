@@ -98,7 +98,7 @@ properties([
             ]
         ],
         [$class: 'ChoiceParameter', 
-            choiceType: 'PT_RADIO_SELECT', 
+            choiceType: 'PT_CHECKBOX', 
             description: 'Select the Version from below list', 
             filterLength: 1, 
             filterable: true, 
