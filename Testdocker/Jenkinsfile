@@ -97,6 +97,31 @@ properties([
                 ]
             ]
         ],
+        [$class: 'ChoiceParameter', 
+            choiceType: 'PT_RADIO_SELECT', 
+            description: 'Select the Version from below list', 
+            filterLength: 1, 
+            filterable: true, 
+            name: 'Test',
+            randomName: 'choice-parameter-5631314349613988', 
+            script: [
+                $class: 'GroovyScript', 
+                fallbackScript: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return[\'Could not get Env\']'
+                ], 
+                script: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return["ALL:selected",\
+                                "c1-DK", \
+                                "c2-UK"]'
+                ]
+            ]
+        ],
         [$class: 'CascadeChoiceParameter', 
             choiceType: 'PT_CHECKBOX', 
             description: 'Select Servers', 
