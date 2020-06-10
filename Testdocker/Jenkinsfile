@@ -156,7 +156,9 @@ pipeline {
     }
 
     agent any
-
+    parameters {
+        extendedChoice description: 'choose environment', multiSelectDelimiter: ',', name: 'environment', quoteValue: false, saveJSONParameterToFile: false, type: 'PT_SINGLE_SELECT', value: 'Development Test UAT Production', visibleItemCount: 5
+    }
     stages{
         stage('Build'){
             steps {
