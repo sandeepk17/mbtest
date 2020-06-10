@@ -42,7 +42,7 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["Dev","QA","Stage","Prod"]'
+                        'return["Dev","Test","UAT","Prod"]'
                 ]
             ]
         ], 
@@ -65,12 +65,12 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["Dev","QA","Stage","Prod"]'
+                        'return["Dev","Test","UAT","Prod"]'
                 ]
             ]
         ], 
         [$class: 'ChoiceParameter', 
-            choiceType: 'PT_SINGLE_SELECT', 
+            choiceType: 'PT_RADIO_SELECT', 
             description: 'Select the TestSuit from the Dropdown List', 
             filterLength: 1, 
             filterable: true, 
@@ -89,11 +89,11 @@ properties([
                     sandbox: false, 
                     script: 
                         'return["ALL:selected",\
-                                "T-1", \
-                                "T-2", \
-                                "T-3", \
-                                "T-4", \
-                                "T-5"]'
+                                "sktst01", \
+                                "sktst02", \
+                                "sktst03", \
+                                "sktst04", \
+                                "sktst05"]'
                 ]
             ]
         ],
@@ -118,16 +118,16 @@ properties([
                     sandbox: false, 
                     script: 
                         ''' if (Env.equals("Dev")){
-                                return["devaaa001","devaaa002","devbbb001","devbbb002","devccc001","devccc002"]
+                                return["skdev01","skdev02"]
                             }
-                            else if(Env.equals("QA")){
-                                return["qaaaa001","qabbb002","qaccc003"]
+                            else if(Env.equals("Test")){
+                                return["sktst01","sktst02","sktst03"]
                             }
-                            else if(Env.equals("Stage")){
-                                return["staaa001","stbbb002","stccc003"]
+                            else if(Env.equals("UAT")){
+                                return["uat01","uat02","uat03"]
                             }
                             else if(Env.equals("Prod")){
-                                return["praaa001","prbbb002","prccc003"]
+                                return["prd01","prd02","prd03"]
                             }
                         '''
                 ]
@@ -141,7 +141,7 @@ pipeline {
     }
 
     agent any
-    
+
     stages{
         stage('Build'){
             steps {
