@@ -17,7 +17,7 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["UK","DK","Both"]'
+                        'return["c1","c2","Both"]'
                 ]
             ]
         ], 
@@ -39,54 +39,6 @@ properties([
                     sandbox: false, 
                     script: 
                         'return["Dev","Test","UAT","Prod"]'
-                ]
-            ]
-        ], 
-        [$class: 'ChoiceParameter', 
-            choiceType: 'PT_RADIO', 
-            description: 'Select the TestSuit from the Dropdown List',
-            name: 'Test',
-            randomName: 'choice-parameter-5631314439613988', 
-            script: [
-                $class: 'GroovyScript', 
-                fallbackScript: [
-                    classpath: [], 
-                    sandbox: false, 
-                    script: 
-                        'return[\'Could not get Env\']'
-                ], 
-                script: [
-                    classpath: [], 
-                    sandbox: false, 
-                    script: 
-                        'return["ALL:selected",\
-                                "sktst01",\
-                               "sktst02",\
-                                "sktst03",\
-                                "sktst04"]'
-                ]
-            ]
-        ],
-        [$class: 'ChoiceParameter', 
-            choiceType: 'PT_CHECKBOX', 
-            description: 'Select the Version from below list',
-            name: 'Test',
-            randomName: 'choice-parameter-5631314349613988', 
-            script: [
-                $class: 'GroovyScript', 
-                fallbackScript: [
-                    classpath: [], 
-                    sandbox: false, 
-                    script: 
-                        'return[\'Could not get Env\']'
-                ], 
-                script: [
-                    classpath: [], 
-                    sandbox: false, 
-                    script: 
-                        'return["ALL:selected",\
-                                "c1-DK",\
-                                "c2-UK"]'
                 ]
             ]
         ],
@@ -114,7 +66,7 @@ properties([
                             else if(Env.equals("c2")){
                                 return["sktst01","sktst02","sktst03"]
                             }
-                            else if(Env.equals("c1c2")){
+                            else if(Env.equals("Both")){
                                 return["uat01","uat02","uat03"]
                             }
                         '''
