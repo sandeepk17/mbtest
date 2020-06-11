@@ -32,7 +32,7 @@ pipeline {
         stage ("Parallel CI") {
             steps {
                 script{
-                    def buildno = null
+                    def build_res = null
                     build_res = build job: "mbextended/${BRANCH_NAME}"
                     if (build_res.result != "SUCCESS")
                     {
