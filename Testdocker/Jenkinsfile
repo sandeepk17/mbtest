@@ -1,28 +1,28 @@
 properties([
     parameters([
-        //[$class: 'ChoiceParameter', 
-        //    choiceType: 'PT_SINGLE_SELECT', 
-        //    description: 'Select the Env Name from the Dropdown List', 
-        //    filterLength: 1, 
-        //    filterable: true, 
-        //    name: 'Env',
-        //    randomName: 'choice-parameter-5631314439613788',
-        //    script: [
-        //        $class: 'GroovyScript', 
-        //        fallbackScript: [
-        //            classpath: [], 
-        //            sandbox: false, 
-        //            script: 
-        //                'return[\'Could not get Env\']'
-        //        ], 
-        //        script: [
-        //            classpath: [], 
-        //            sandbox: false, 
-        //            script: 
-        //                'return["DEV","QA","Stage","Prod","VAL2:selected"]'
-        //        ]
-        //    ]
-        //],
+        [$class: 'ChoiceParameter', 
+            choiceType: 'PT_SINGLE_SELECT', 
+            description: 'Select the version - DK (c1) or UK(c2)', 
+            filterLength: 1, 
+            filterable: true, 
+            name: 'Package',
+            randomName: 'choice-parameter-5631314439636988',
+            script: [
+                $class: 'GroovyScript', 
+                fallbackScript: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return[\'Could not get deployment package version\']'
+                ], 
+                script: [
+                    classpath: [], 
+                    sandbox: false, 
+                    script: 
+                        'return["c1-DK","c2-UK","Both"]'
+                ]
+            ]
+        ],
         [$class: 'ChoiceParameter', 
             choiceType: 'PT_SINGLE_SELECT', 
             description: 'Select the Env Name from the Dropdown List',
@@ -132,8 +132,14 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        ''' if (Env.equals("Dev")){
-                                return["skdev01","skdev02"]
+                        ''' if (Env.equals("Dev"))&&(Package.equals("c1-DK)){
+                                return["skdev01"]
+                            }
+                            else (Env.equals("Dev"))&&(Package.equals("c2-DK)){
+                                return["skdev02"]
+                            }
+                            else (Env.equals("Dev"))&&(Package.equals("Both")){
+                                return["skdev02","skdev01"]
                             }
                             else if(Env.equals("Test")){
                                 return["sktst01","sktst02","sktst03"]

@@ -63,3 +63,5 @@ pipeline {
         }
     }
 }
+
+def (test_result)
