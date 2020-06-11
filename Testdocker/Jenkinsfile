@@ -119,7 +119,7 @@ properties([
             description: 'Select Servers',
             name: 'Server', 
             randomName: 'choice-parameter-5631314456178619', 
-            referencedParameters: 'Env', 
+            referencedParameters: 'Env','Package', 
             script: [
                 $class: 'GroovyScript', 
                 fallbackScript: [
