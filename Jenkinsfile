@@ -36,11 +36,11 @@ pipeline {
                     build_res = build job: "mbextended/${BRANCH_NAME}", wait: true
                     if (build_res.result != "SUCCESS")
                     {
-                        color = "red"
+                        color = "green"
                     }
                     else
                     {
-                        color = "green"
+                        color = "red"
                     }
                     currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
                     currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">'+ "${PROJECT_NAME}" + '>No#' + build_res.number + '</a><br>' + "\n" 
