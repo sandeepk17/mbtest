@@ -1,0 +1,58 @@
+pipeline {
+    agent none
+    stages {
+        stage("foo") {
+            matrix {
+                axes { 
+                    axis { 
+                        name 'OS_VALUE'  
+                        values "linux", "windows", "mac"  
+                    }
+                    axis {
+                        name 'BROWSER_VALUE'
+                        values "firefox", "chrome", "safari", "ie"
+                    }
+                }
+                excludes {  
+                    exclude {  
+                        axis {  
+                            name 'OS_VALUE'  
+				                                    
+                            values 'linux'
+                        }
+                        axis {
+                            name 'BROWSER_VALUE'
+                            values 'safari'
+                        }
+                    }
+                    exclude {
+                        axis {
+                            name 'OS_VALUE'
+                            notValues 'windows'
+                        }
+                        axis {
+                            name 'BROWSER_VALUE'
+                            values 'ie'
+                        }
+                    }
+                }
+		            
+                stages {
+                    stage("first") {
+                        steps {
+                            echo "First branch"
+                            echo "OS=${OS_VALUE}"
+                            echo "BROWSER=${BROWSER_VALUE}"
+                        }
+                    }
+                    stage("second") {
+                        steps {
+                            
+				echo "Second branch"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
