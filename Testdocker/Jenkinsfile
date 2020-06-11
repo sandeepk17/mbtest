@@ -135,10 +135,10 @@ properties([
                         ''' if ((Env.equals("Dev"))&&(Package.equals("c1-DK"))){
                                 return["skdev01"]
                             }
-                            else ((Env.equals("Dev"))&&(Package.equals("c2-DK"))){
+                            else if((Env.equals("Dev"))&&(Package.equals("c2-DK"))){
                                 return["skdev02"]
                             }
-                            else (Env.equals("Dev"))&&(Package.equals("Both")){
+                            else if(Env.equals("Dev"))&&(Package.equals("Both")){
                                 return["skdev02","skdev01"]
                             }
                             else if(Env.equals("Test")){
