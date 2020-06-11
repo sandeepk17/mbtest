@@ -42,7 +42,7 @@ pipeline {
                         color = "green"
                     }
                     currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
-                    currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">'+ "${PROJECT_NAME}" + '">No#' + build_res.number + '</a><br>' + "\n" 
+                    currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">'+ "${PROJECT_NAME}" + '>No#' + build_res.number + '</a><br>' + "\n" 
                 }
             }
         }
