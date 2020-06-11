@@ -2,29 +2,6 @@ properties([
     parameters([
         [$class: 'ChoiceParameter', 
             choiceType: 'PT_SINGLE_SELECT', 
-            description: 'Select the version - DK (c1) or UK(c2)', 
-            filterLength: 1, 
-            filterable: true, 
-            name: 'Package',
-            randomName: 'choice-parameter-5631314439636988',
-            script: [
-                $class: 'GroovyScript', 
-                fallbackScript: [
-                    classpath: [], 
-                    sandbox: false, 
-                    script: 
-                        'return[\'Could not get deployment package version\']'
-                ], 
-                script: [
-                    classpath: [], 
-                    sandbox: false, 
-                    script: 
-                        'return["c1-DK","c2-UK","Both"]'
-                ]
-            ]
-        ],
-        [$class: 'ChoiceParameter', 
-            choiceType: 'PT_SINGLE_SELECT', 
             description: 'Select the Env Name from the Dropdown List',
             name: 'Env', 
             randomName: 'choice-parameter-5631314439613978', 
@@ -40,7 +17,7 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["Dev","Test","UAT","Prod"]'
+                        'return["c1","c1","c1c2"]'
                 ]
             ]
         ], 
@@ -132,17 +109,14 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        ''' if (Env.equals("Dev")){
+                        ''' if (Env.equals("c1")){
                                 return["skdev01","skdev02"]
                             }
-                            else if(Env.equals("Test")){
+                            else if(Env.equals("c2")){
                                 return["sktst01","sktst02","sktst03"]
                             }
-                            else if(Env.equals("UAT")){
+                            else if(Env.equals("c1c2")){
                                 return["uat01","uat02","uat03"]
-                            }
-                            else if(Env.equals("Prod")){
-                                return["prd01","prd02","prd03"]
                             }
                         '''
                 ]
