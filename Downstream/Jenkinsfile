@@ -17,6 +17,7 @@ pipeline {
             steps {
                 echo"--------Testing jobs---------------"
                 sleep(time:10,unit:"SECONDS")
+                echo"${test}"
             }
         }
     }
