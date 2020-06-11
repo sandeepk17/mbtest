@@ -18,6 +18,7 @@ pipeline {
                     println "Queue contains ${queue.items.length} items"
                     queue.clear()
                     println "Queue cleared"
+                    currentBuild.description = "<b>Branch:</b> ${BRANCH_NAME}<br/>"
                 }
             }
         }
