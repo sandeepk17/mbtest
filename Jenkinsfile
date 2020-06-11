@@ -42,11 +42,19 @@ pipeline {
                     {
                         color = "green"
                     }
-                    currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
-                    currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">'+ "mbextended->No#" + build_res.number + ':' + build_res.result + '</a><br>' + "\n" 
                 }
             }
-        }
+            post {
+                always{
+                    //build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
+                    //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
+                    echo"-------success-----------"
+                    script{ 
+                        currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
+                        currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">'+ "mbextended->No#" + build_res.number + ':' + build_res.result + '</a><br>' + "\n" 
+                    } 
+                }
+            }
     }
     post {
         success{
