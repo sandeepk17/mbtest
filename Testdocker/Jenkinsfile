@@ -17,7 +17,7 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["c1","c2","c1c2"]'
+                        'return["UK","DK","Both"]'
                 ]
             ]
         ], 
@@ -63,8 +63,7 @@ properties([
                                 "sktst01",\
                                "sktst02",\
                                 "sktst03",\
-                                "sktst04",\
-                                "sktst05"]'
+                                "sktst04"]'
                 ]
             ]
         ],
