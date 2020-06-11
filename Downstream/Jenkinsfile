@@ -17,17 +17,7 @@ pipeline {
             steps {
                 echo"--------Testing jobs---------------"
                 sleep(time:10,unit:"SECONDS")
-                echo"${test}"
             }
-        }
-    }
-    post {
-        failure {
-           echo"--------failing jobs-----------" 
-        }
-        cleanup {
-            echo"--------deleting repo-----------" 
-            //deleteDir()
         }
     }
 }
