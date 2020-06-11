@@ -132,10 +132,10 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        ''' if ((Env.equals("Dev"))&&(Package.equals("c1-DK"))){
+                        ''' if (Package.equals("c1-DK")){
                                 return["skdev01"]
                             }
-                            else if((Env.equals("Dev"))&&(Package.equals("c2-DK"))){
+                            else if(Package.equals("c2-DK")){
                                 return["skdev02"]
                             }
                             else if(Env.equals("Dev"))&&(Package.equals("Both")){
