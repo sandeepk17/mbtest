@@ -119,7 +119,7 @@ properties([
             description: 'Select Servers',
             name: 'Server', 
             randomName: 'choice-parameter-5631314456178619', 
-            referencedParameters: 'Package', 
+            referencedParameters: 'Env', 
             script: [
                 $class: 'GroovyScript', 
                 fallbackScript: [
@@ -132,14 +132,17 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        ''' if (Package.equals("c1-DK")){
-                                return["skdev01"]
+                        ''' if (Env.equals("Dev")){
+                                return["skdev01","skdev02"]
                             }
-                            else if(Package.equals("c2-DK")){
-                                return["skdev02"]
+                            else if(Env.equals("Test")){
+                                return["sktst01","sktst02","sktst03"]
                             }
-                            else if(Package.equals("Both")){
-                                return["skdev02","skdev01"]
+                            else if(Env.equals("UAT")){
+                                return["uat01","uat02","uat03"]
+                            }
+                            else if(Env.equals("Prod")){
+                                return["prd01","prd02","prd03"]
                             }
                         '''
                 ]
