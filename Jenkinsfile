@@ -32,7 +32,7 @@ pipeline {
             steps {
                 script{
                     def buildno = null
-                    build_res = build job: "downstream2/${BRANCH_NAME}", wait: true
+                    build_res = build job: "mbextended/${BRANCH_NAME}", wait: true
                     if (build_res.result != "SUCCESS")
                     {
                         color = "red"
@@ -49,8 +49,9 @@ pipeline {
     }
     post {
         success{
-            build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
+            //build job: "mbextended/${BRANCH_NAME}", quietPeriod: 10
             //parameters: [string(name: 'MY_BRANCH_NAME', defaultValue: '${env.BRANCH_NAME}', description: 'pass branch value')],
+            echo"-------success-----------" 
         }
         failure {
            echo"--------failing jobs-----------" 
