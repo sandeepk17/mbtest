@@ -17,7 +17,7 @@ properties([
                     classpath: [], 
                     sandbox: false, 
                     script: 
-                        'return["c1","c1","c1c2"]'
+                        'return["c1","c2","c1c2"]'
                 ]
             ]
         ], 
