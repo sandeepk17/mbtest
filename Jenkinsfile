@@ -25,7 +25,7 @@ pipeline {
             steps {
                 echo"--------Testing jobs---------------"
                 echo"--------${BRANCH_NAME}---------------"
-                sleep(time:100,unit:"SECONDS")
+                //sleep(time:100,unit:"SECONDS")
             }
         }
         stage ("Parallel CI") {
