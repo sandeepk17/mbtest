@@ -21,7 +21,7 @@ pipeline {
                 }
             }
         }
-        stage ("Parallel CI") {
+        stage ("Parallel CI1") {
             steps {
                 echo"--------Testing jobs---------------"
                 echo"--------${BRANCH_NAME}---------------"
@@ -31,8 +31,18 @@ pipeline {
         stage ("Parallel CI") {
             steps {
                 script{
-                    build job: "downstream2/${BRANCH_NAME}", quietPeriod: 10
+                def buildno = null
+                build_res = build job: "downstream2/${BRANCH_NAME}", wait: true
+                if (build_res.result != "SUCCESS")
+                {
+                    color = "red"
                 }
+                else
+                {
+                    color = "green"
+                }
+                currentBuild.description += "<b>Commit author:</b> ${currentBuild.number}<br/>"
+                currentBuild.description += '<a href=' + build_res.absoluteUrl +' style="color:' + color + '">'+ build_res.displayName + '">No#' + build_res.number + '</a><br>' + "\n" 
             }
         }
     }
